@@ -1,0 +1,9 @@
+23:53:37 INFO  [HttpService(akka://default)] - Server Started: 127.0.0.1
+23:58:22 INFO  [] - GET all request for users
+23:58:22 INFO  [] - [all]
+23:59:23 DEBUG [akka://default/system/Materializers/StreamSupervisor-1/flow-1-0-detacher] - Aborting tcp connection to /127.0.0.1:54437 because of upstream failure: akka.http.impl.engine.HttpIdleTimeoutException: HTTP idle-timeout encountered, no bytes passed in the last 60 seconds. This is configurable by akka.http.[server|client].idle-timeout.
+00:01:24 INFO  [] - POST request for create user with id 313c78ec-1eb8-4410-b284-f75079b15739
+00:01:24 INFO  [] - [create] - 313c78ec-1eb8-4410-b284-f75079b15739
+00:01:32 INFO  [] - GET all request for users
+00:01:32 INFO  [] - [all]
+00:02:33 DEBUG [akka://default/system/Materializers/StreamSupervisor-1/flow-2-0-detacher] - Aborting tcp connection to /127.0.0.1:54453 because of upstream failure: akka.http.impl.engine.HttpIdleTimeoutException: HTTP idle-timeout encountered, no bytes passed in the last 60 seconds. This is configurable by akka.http.[server|client].idle-timeout.
