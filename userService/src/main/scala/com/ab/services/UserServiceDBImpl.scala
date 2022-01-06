@@ -1,7 +1,6 @@
 package com.ab.services
 
 import java.util.UUID
-
 import com.ab.persistence.Model.User
 import com.ab.persistence.UserDao
 import com.ab.util.Util
@@ -10,6 +9,7 @@ import org.slf4j.{Logger, LoggerFactory}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.util.Success
 
 class UserServiceDBImpl(config: Config, userDao: UserDao) extends UserService {
 
@@ -29,10 +29,29 @@ class UserServiceDBImpl(config: Config, userDao: UserDao) extends UserService {
   override def create(user: User): Future[ServiceResponse[User]] = {
     logger.info("[create] - {}", user.id)
 
-    encryptPassword(user)
-      .zip(isUsernameUnique(user))
-      .flatMap { encUserAndIsUnique: (User, Boolean) =>
+    /*var createdUser:Future[User] = userDao.insert(user)
+    //callbacks (the flow is decided by executor)
+    createdUser.foreach{
+      user => logger.info("[create] - User created with id {}.", user.id)
+    }
+    createdUser.foreach{
+      user => logger.info("[create] - Sending email for successful reg to {}.", user.email)
+    }
 
+    //in order to control the flow
+    createdUser.andThen{
+      case Success(user) => logger.info("[create] - User created with id {}.", user.id)
+    }.andThen{
+      case Success(user) => logger.info("[create] - Sending email for successful reg to {}.", user.email)
+    }
+
+    createdUser.map(user => Right(user))*/
+
+    //composing multiple futures (nested async operation)
+    encryptPassword(user) /*Async Operation*/
+      .zip(isUsernameUnique(user)) /*Async Operation*/
+      .flatMap /*Async Operation*/
+      { encUserAndIsUnique: (User, Boolean) =>
         val (pwdEncryptedUser, isUnameUnique) = encUserAndIsUnique
         if(isUnameUnique)
           userDao.insert(pwdEncryptedUser)
@@ -41,6 +60,7 @@ class UserServiceDBImpl(config: Config, userDao: UserDao) extends UserService {
       .map { created =>
         Right(created)
       }
+      //handling future failures
       .recover {
         case e: Exception => Left(ErrorResponse(e.getMessage, 0))
       }
@@ -48,15 +68,12 @@ class UserServiceDBImpl(config: Config, userDao: UserDao) extends UserService {
   }
 
   private def encryptPassword(user: User): Future[User] =
-    Util
-      .encrypt(user.password)
+    Util.encrypt(user.password)
       .map(encrypted => user.copy(password = encrypted))
 
   private def isUsernameUnique(user: User): Future[Boolean] =
-    userDao
-      .byUsername(user.username)
+    userDao.byUsername(user.username)
       .map(_.isEmpty)
-
 
   override def byId(id: UUID): Future[ServiceResponse[User]] = {
     logger.info("[byId] - {}", id)

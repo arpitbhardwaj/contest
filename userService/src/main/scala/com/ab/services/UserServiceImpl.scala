@@ -1,12 +1,14 @@
 package com.ab.services
 
 import java.util.UUID
-
 import com.ab.persistence.Model.User
 import com.typesafe.config.Config
 import org.slf4j.{Logger, LoggerFactory}
 
-import scala.concurrent.ExecutionContext.Implicits.global
+import java.util.concurrent.ForkJoinPool
+import scala.concurrent.{ExecutionContext, ExecutionContextExecutor}
+
+//import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
 
@@ -14,6 +16,10 @@ class UserServiceImpl(config: Config) extends UserService {
 
   private val logger: Logger = LoggerFactory.getLogger(getClass.getName)
   private var Users = Map[UUID, User]()
+
+  //custom thread executor
+  implicit val threadPool: ForkJoinPool = new ForkJoinPool(2)
+  implicit val ec:ExecutionContextExecutor = ExecutionContext.fromExecutor(threadPool)
 
   override def all: Future[ServiceResponse[Seq[User]]] = Future {
     logger.info("[all]")
