@@ -42,6 +42,13 @@ lazy val userService = (project in file("userService"))
     libraryDependencies ++= akkaDependencies ++ databaseDependencies
   )
 
+lazy val contestService = (project in file("contestService"))
+  .settings(
+    name := "contest_service",
+    commonSettings,
+    libraryDependencies ++= akkaDependencies ++ databaseDependencies
+  )
+
 lazy val root = (project in file("."))
   .settings(
     name := "contest",
