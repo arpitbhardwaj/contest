@@ -16,6 +16,11 @@ lazy val commonSettings = Seq(
     "com.softwaremill.macwire" %% "macros"                    % "2.5.2"               % Provided
   )
 )
+lazy val rootDependencies = Seq(
+  "com.typesafe.akka"          %% "akka-actor"                % akkaVersion,
+  "com.typesafe.akka"          %% "akka-testkit"              % akkaVersion,
+  "org.scalatest"              %% "scalatest"                 % "3.2.9"               % Test
+)
 
 lazy val databaseDependencies = Seq(
   "com.typesafe.slick"         %% "slick"                     % slickVersion,
@@ -52,5 +57,7 @@ lazy val contestService = (project in file("contestService"))
 lazy val root = (project in file("."))
   .settings(
     name := "contest",
-    idePackagePrefix := Some("com.ab")
+    idePackagePrefix := Some("com.ab"),
+    libraryDependencies ++= rootDependencies
+
   )

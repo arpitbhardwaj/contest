@@ -7,3 +7,96 @@
 00:01:32 INFO  [] - GET all request for users
 00:01:32 INFO  [] - [all]
 00:02:33 DEBUG [akka://default/system/Materializers/StreamSupervisor-1/flow-2-0-detacher] - Aborting tcp connection to /127.0.0.1:54453 because of upstream failure: akka.http.impl.engine.HttpIdleTimeoutException: HTTP idle-timeout encountered, no bytes passed in the last 60 seconds. This is configurable by akka.http.[server|client].idle-timeout.
+13:25:46 [g-backend-service-akka.actor.default-dispatcher-7] INFO  [akka://g-backend-service/user] - Starting Backend Service at http://localhost:8081
+13:26:47 [g-backend-service-akka.actor.default-dispatcher-7] INFO  [akka://g-backend-service/user/contest-manager] - Creating Contest with id: 323c78ec-1eb8-4410-b284-f75079b15739 ...
+13:26:47 [g-backend-service-dbm-pool-dispatcher-14] INFO  [akka://g-backend-service/user/contest-manager/db-manager-pool/$a] - DatabaseManager creating contest: Contest(323c78ec-1eb8-4410-b284-f75079b15739,Weekly Contest 1,90.0)
+13:26:47 [g-backend-service-dbm-pool-dispatcher-15] INFO  [akka://g-backend-service/user/contest-manager/db-manager-pool/$a] - DatabaseManager WrappedResult: DBContestCreated(true,Contest(323c78ec-1eb8-4410-b284-f75079b15739,Weekly Contest 1,90.0))
+13:26:47 [g-backend-service-akka.actor.default-dispatcher-3] INFO  [akka://g-backend-service/user/contest-manager] - Got Wrapped DbManager result 323c78ec-1eb8-4410-b284-f75079b15739. Adding contest to currentContests
+13:26:59 [g-backend-service-akka.actor.default-dispatcher-7] INFO  [akka://g-backend-service/user/contest-manager] - Contest with id: 323c78ec-1eb8-4410-b284-f75079b15739 is already created ...
+13:28:00 [g-backend-service-akka.actor.default-dispatcher-5] DEBUG [akka://g-backend-service/system/Materializers/StreamSupervisor-0/flow-1-0-detacher] - Aborting tcp connection to /127.0.0.1:51005 because of upstream failure: akka.http.impl.engine.HttpIdleTimeoutException: HTTP idle-timeout encountered, no bytes passed in the last 60 seconds. This is configurable by akka.http.[server|client].idle-timeout.
+13:30:13 [g-backend-service-akka.actor.default-dispatcher-7] INFO  [akka://g-backend-service/user/contest-manager] - Contest with id: 323c78ec-1eb8-4410-b284-f75079b15739 is being returned.
+13:30:22 [g-backend-service-akka.actor.default-dispatcher-3] INFO  [akka://g-backend-service/user/contest-manager] - Contest with id: 323c78ec-1eb8-4410-b284-f75079b15730 is not available.
+13:30:29 [g-backend-service-akka.actor.default-dispatcher-5] INFO  [akka://g-backend-service/user/contest-manager] - Contest with id: 323c78ec-1eb8-4410-b284-f75079b15739 is being returned.
+13:31:30 [g-backend-service-akka.actor.default-dispatcher-5] DEBUG [akka://g-backend-service/system/Materializers/StreamSupervisor-0/flow-2-0-detacher] - Aborting tcp connection to /127.0.0.1:51038 because of upstream failure: akka.http.impl.engine.HttpIdleTimeoutException: HTTP idle-timeout encountered, no bytes passed in the last 60 seconds. This is configurable by akka.http.[server|client].idle-timeout.
+13:39:51 [g-backend-service-akka.actor.default-dispatcher-25] INFO  [akka://g-backend-service/user/contest-manager] - Participant with id: 313c78ec-1eb8-4410-b284-f75079b15739 is being registered for contestId: 323c78ec-1eb8-4410-b284-f75079b15739.
+13:39:51 [g-backend-service-akka.actor.default-dispatcher-26] INFO  [akka://g-backend-service/user/contest-manager/contest-323c78ec-1eb8-4410-b284-f75079b15739] - Registering Participant with ID: 313c78ec-1eb8-4410-b284-f75079b15739
+13:39:51 [g-backend-service-akka.actor.default-dispatcher-25] WARN  [akka://g-backend-service/user/contest-manager] - Participant Registration for id: 313c78ec-1eb8-4410-b284-f75079b15739 Success!
+13:39:51 [g-backend-service-akka.actor.default-dispatcher-25] INFO  [akka://g-backend-service/user/contest-manager] - Participant [313c78ec-1eb8-4410-b284-f75079b15739] Registration from CA: true
+13:40:51 [g-backend-service-akka.actor.default-dispatcher-25] DEBUG [akka://g-backend-service/system/Materializers/StreamSupervisor-0/flow-3-0-detacher] - Aborting tcp connection to /127.0.0.1:51116 because of upstream failure: akka.http.impl.engine.HttpIdleTimeoutException: HTTP idle-timeout encountered, no bytes passed in the last 60 seconds. This is configurable by akka.http.[server|client].idle-timeout.
+13:46:10 [g-backend-service-akka.actor.default-dispatcher-31] INFO  [akka://g-backend-service/user/contest-manager] - Contest with id: 323c78ec-1eb8-4410-b284-f75079b15739 is being returned.
+13:46:24 [g-backend-service-akka.actor.default-dispatcher-31] INFO  [akka://g-backend-service/user/contest-manager] - Request to start contest: 323c78ec-1eb8-4410-b284-f75079b15739 received.
+13:46:24 [g-backend-service-akka.actor.default-dispatcher-31] INFO  [akka://g-backend-service/user/contest-manager/contest-323c78ec-1eb8-4410-b284-f75079b15739] - Starting Contest!
+13:46:24 [g-backend-service-akka.actor.default-dispatcher-32] INFO  [akka://g-backend-service/user/contest-manager] - Changing contest 323c78ec-1eb8-4410-b284-f75079b15739 to Active
+13:47:24 [g-backend-service-akka.actor.default-dispatcher-33] DEBUG [akka://g-backend-service/system/Materializers/StreamSupervisor-0/flow-4-0-detacher] - Aborting tcp connection to /127.0.0.1:51164 because of upstream failure: akka.http.impl.engine.HttpIdleTimeoutException: HTTP idle-timeout encountered, no bytes passed in the last 60 seconds. This is configurable by akka.http.[server|client].idle-timeout.
+14:07:19 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=18m3s177ms).
+14:07:19 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=18m3s177ms).
+14:07:19 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=18m3s177ms).
+14:07:19 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=18m3s177ms).
+14:15:45 [g-backend-service-akka.actor.default-dispatcher-38] INFO  [akka://g-backend-service/user/contest-manager] - Request to stop contest: 323c78ec-1eb8-4410-b284-f75079b15739 received.
+14:15:45 [g-backend-service-akka.actor.default-dispatcher-40] INFO  [akka://g-backend-service/user/contest-manager/contest-323c78ec-1eb8-4410-b284-f75079b15739] - Stopping Contest.
+14:15:45 [g-backend-service-akka.actor.default-dispatcher-38] INFO  [akka://g-backend-service/user/contest-manager] - Changing contest 323c78ec-1eb8-4410-b284-f75079b15739 to InActive
+14:15:45 [g-backend-service-akka.actor.default-dispatcher-40] INFO  [akka://g-backend-service/user/contest-manager/contest-323c78ec-1eb8-4410-b284-f75079b15739] - Contest Actor stopped
+14:15:45 [g-backend-service-akka.actor.default-dispatcher-40] INFO  [akka://g-backend-service/user/contest-manager/contest-323c78ec-1eb8-4410-b284-f75079b15739] - Contest Actor is being stopped.The PostStop signal will be passed to current behaviour.All other messages and signals will effectively be ignored.
+14:16:45 [g-backend-service-akka.actor.default-dispatcher-38] DEBUG [akka://g-backend-service/system/Materializers/StreamSupervisor-0/flow-5-0-detacher] - Aborting tcp connection to /127.0.0.1:51352 because of upstream failure: akka.http.impl.engine.HttpIdleTimeoutException: HTTP idle-timeout encountered, no bytes passed in the last 60 seconds. This is configurable by akka.http.[server|client].idle-timeout.
+15:14:06 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=50m16s628ms).
+15:14:06 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=50m16s628ms).
+15:14:06 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=50m16s628ms).
+15:14:06 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=50m16s628ms).
+15:17:55 [g-backend-service-akka.actor.default-dispatcher-45] INFO  [akka://g-backend-service/user/contest-manager] - Creating Contest with id: 323c78ec-1eb8-4410-b284-f75079b15738 ...
+15:17:55 [g-backend-service-dbm-pool-dispatcher-48] INFO  [akka://g-backend-service/user/contest-manager/db-manager-pool/$b] - DatabaseManager creating contest: Contest(323c78ec-1eb8-4410-b284-f75079b15738,Weekly Contest 2,90.0)
+15:17:56 [slick.contestdb-1] WARN  [] - slick.contestdb - Failed to validate connection org.postgresql.jdbc.PgConnection@5cb661a3 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+15:17:56 [slick.contestdb-1] WARN  [] - slick.contestdb - Failed to validate connection org.postgresql.jdbc.PgConnection@66963377 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+15:17:56 [slick.contestdb-1] WARN  [] - slick.contestdb - Failed to validate connection org.postgresql.jdbc.PgConnection@2405d301 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+15:17:56 [slick.contestdb-1] WARN  [] - slick.contestdb - Failed to validate connection org.postgresql.jdbc.PgConnection@4b51055b (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+15:17:56 [slick.contestdb-1] WARN  [] - slick.contestdb - Failed to validate connection org.postgresql.jdbc.PgConnection@3c934e34 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+15:17:56 [slick.contestdb-1] WARN  [] - slick.contestdb - Failed to validate connection org.postgresql.jdbc.PgConnection@6bc9df5a (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+15:17:56 [slick.contestdb-1] WARN  [] - slick.contestdb - Failed to validate connection org.postgresql.jdbc.PgConnection@61de84f9 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+15:17:56 [slick.contestdb-1] WARN  [] - slick.contestdb - Failed to validate connection org.postgresql.jdbc.PgConnection@22662e44 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+15:17:56 [slick.contestdb-1] WARN  [] - slick.contestdb - Failed to validate connection org.postgresql.jdbc.PgConnection@4a236d2 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+15:17:57 [slick.contestdb-1] WARN  [] - slick.contestdb - Failed to validate connection org.postgresql.jdbc.PgConnection@21341a13 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+15:18:25 [g-backend-service-dbm-pool-dispatcher-49] INFO  [akka://g-backend-service/user/contest-manager/db-manager-pool/$b] - DatabaseManager create contest failed: org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+15:18:25 [g-backend-service-dbm-pool-dispatcher-49] INFO  [akka://g-backend-service/user/contest-manager/db-manager-pool/$b] - Restarting DatabaseManager
+15:18:25 [g-backend-service-dbm-pool-dispatcher-49] ERROR [akka://g-backend-service/user/contest-manager/db-manager-pool/$b] - Supervisor RestartSupervisor saw failure: Could not connect to database
+java.net.ConnectException: Could not connect to database
+	at com.ab.actors.DatabaseManager$.$anonfun$db$2(DatabaseManager.scala:46)
+	at akka.actor.typed.internal.AdaptMessage.adapt(InternalMessage.scala:29)
+	at akka.actor.typed.internal.adapter.ActorAdapter.$anonfun$aroundReceive$1(ActorAdapter.scala:95)
+	at akka.actor.typed.internal.adapter.ActorAdapter.withSafelyAdapted(ActorAdapter.scala:191)
+	at akka.actor.typed.internal.adapter.ActorAdapter.aroundReceive(ActorAdapter.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:580)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:548)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:270)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:231)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+15:18:52 [g-backend-service-akka.actor.default-dispatcher-45] INFO  [akka://g-backend-service/user/contest-manager] - Creating Contest with id: 323c78ec-1eb8-4410-b284-f75079b15738 ...
+15:18:52 [g-backend-service-dbm-pool-dispatcher-50] INFO  [akka://g-backend-service/user/contest-manager/db-manager-pool/$c] - DatabaseManager creating contest: Contest(323c78ec-1eb8-4410-b284-f75079b15738,Weekly Contest 2,90.0)
+15:18:52 [slick.contestdb-1] WARN  [] - slick.contestdb - Failed to validate connection org.postgresql.jdbc.PgConnection@244dcee2 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+15:18:52 [slick.contestdb-1] WARN  [] - slick.contestdb - Failed to validate connection org.postgresql.jdbc.PgConnection@2eb5a592 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+15:18:52 [slick.contestdb-1] WARN  [] - slick.contestdb - Failed to validate connection org.postgresql.jdbc.PgConnection@6bb73e20 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+15:18:52 [slick.contestdb-1] WARN  [] - slick.contestdb - Failed to validate connection org.postgresql.jdbc.PgConnection@21c7c76a (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+15:18:52 [slick.contestdb-1] WARN  [] - slick.contestdb - Failed to validate connection org.postgresql.jdbc.PgConnection@5a1615a5 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+15:18:52 [slick.contestdb-1] WARN  [] - slick.contestdb - Failed to validate connection org.postgresql.jdbc.PgConnection@598cb240 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+15:18:52 [slick.contestdb-1] WARN  [] - slick.contestdb - Failed to validate connection org.postgresql.jdbc.PgConnection@b98c16f (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+15:18:52 [slick.contestdb-1] WARN  [] - slick.contestdb - Failed to validate connection org.postgresql.jdbc.PgConnection@14fbabe1 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+15:18:52 [slick.contestdb-1] WARN  [] - slick.contestdb - Failed to validate connection org.postgresql.jdbc.PgConnection@7eaa3fe6 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+15:18:53 [slick.contestdb-1] WARN  [] - slick.contestdb - Failed to validate connection org.postgresql.jdbc.PgConnection@42889cc1 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+15:18:53 [g-backend-service-dbm-pool-dispatcher-51] INFO  [akka://g-backend-service/user/contest-manager/db-manager-pool/$c] - DatabaseManager WrappedResult: DBContestCreated(true,Contest(323c78ec-1eb8-4410-b284-f75079b15738,Weekly Contest 2,90.0))
+15:18:53 [g-backend-service-akka.actor.default-dispatcher-46] INFO  [akka://g-backend-service/user/contest-manager] - Got Wrapped DbManager result 323c78ec-1eb8-4410-b284-f75079b15738. Adding contest to currentContests
+15:19:53 [g-backend-service-akka.actor.default-dispatcher-47] DEBUG [akka://g-backend-service/system/Materializers/StreamSupervisor-0/flow-6-0-detacher] - Aborting tcp connection to /127.0.0.1:51514 because of upstream failure: akka.http.impl.engine.HttpIdleTimeoutException: HTTP idle-timeout encountered, no bytes passed in the last 60 seconds. This is configurable by akka.http.[server|client].idle-timeout.
+16:05:20 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=12m44s185ms).
+16:05:20 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=12m44s185ms).
+16:05:20 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=12m44s185ms).
+16:05:20 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=12m44s185ms).
+16:05:39 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=12m44s174ms).
+16:31:57 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=47s654ms).
+16:32:08 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=47s658ms).
+16:32:08 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=47s658ms).
+16:32:08 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=47s658ms).
+16:32:08 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=47s658ms).
+18:23:53 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=5m44s62ms).
+18:23:53 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=5m44s63ms).
+18:23:53 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=5m44s58ms).
+18:23:53 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=5m44s58ms).
+18:24:12 [slick.contestdb housekeeper] WARN  [] - slick.contestdb - Thread starvation or clock leap detected (housekeeper delta=5m44s7ms).
