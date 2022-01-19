@@ -9,8 +9,6 @@ import akka.actor.typed.scaladsl.{Behaviors, Routers}
 import akka.util.Timeout
 import com.ab.actors.ContestActor.{Active, Completed, ContestResponse}
 import com.ab.actors.DatabaseManager.DBContestCreated
-import com.ab.persistance.ContestDaoImpl
-import com.ab.persistance.Model.Contest
 
 import scala.concurrent.duration.FiniteDuration
 import scala.util.{Failure, Success}

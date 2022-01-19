@@ -2,7 +2,6 @@ package com.ab.persistance
 
 import java.util.UUID
 
-import com.ab.persistance.Model.Contest
 import slick.jdbc.JdbcProfile
 
 import scala.concurrent.{ExecutionContext, Future}

@@ -1,21 +1,27 @@
 package com.ab
+package actors
 
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 
 object ChangeActorBehaviour extends App {
 
-  object FussyKid{
+  object FussyKid {
     case object KidAccept
+
     case object KidReject
+
     val HAPPY = "happy"
     val SAD = "sad"
   }
 
   //stateful
-  class FussyKid extends Actor{
+  class FussyKid extends Actor {
+
     import FussyKid._
     import Mom._
+
     var state = HAPPY
+
     override def receive: Receive = {
       case Food(VEGETABLE) => state = SAD
       case Food(CHOCOLATE) => state = HAPPY
@@ -28,54 +34,68 @@ object ChangeActorBehaviour extends App {
   }
 
   //stateless
-  class StateLessFussyKid extends Actor{
+  class StateLessFussyKid extends Actor {
+
     import FussyKid._
     import Mom._
+
     override def receive: Receive = happyReceive
+
     def happyReceive: Receive = {
       //case Food(VEGETABLE) => context.become(sadReceive)
       //equivalent to where true means discard the old message handler and fully replace it with new msg handler
       //case Food(VEGETABLE) => context.become(sadReceive,true)
-      case Food(VEGETABLE) => context.become(sadReceive,false)
+      case Food(VEGETABLE) => context.become(sadReceive, false)
       case Food(CHOCOLATE) => //stay happy
       case Ask(_) => sender() ! KidAccept
     }
+
     def sadReceive: Receive = {
       case Food(VEGETABLE) => //stay sad
-      case Food(CHOCOLATE) => context.become(happyReceive,false)
+      case Food(CHOCOLATE) => context.become(happyReceive, false)
       case Ask(_) => sender() ! KidReject
     }
   }
 
-  class StateLessFussyKid2 extends Actor{
+  class StateLessFussyKid2 extends Actor {
+
     import FussyKid._
     import Mom._
+
     override def receive: Receive = happyReceive
+
     def happyReceive: Receive = {
       //case Food(VEGETABLE) => context.become(sadReceive)
       //equivalent to where true means discard the old message handler and fully replace it with new msg handler
       //case Food(VEGETABLE) => context.become(sadReceive,true)
-      case Food(VEGETABLE) => context.become(sadReceive,false)
+      case Food(VEGETABLE) => context.become(sadReceive, false)
       case Food(CHOCOLATE) => //stay happy
       case Ask(_) => sender() ! KidAccept
     }
+
     def sadReceive: Receive = {
-      case Food(VEGETABLE) => context.become(sadReceive,false)
+      case Food(VEGETABLE) => context.become(sadReceive, false)
       case Food(CHOCOLATE) => context.unbecome()
       case Ask(_) => sender() ! KidReject
     }
   }
 
-  object Mom{
-    case class MomStart(kidRef:ActorRef)
-    case class Food(food:String)
-    case class Ask(msg:String)
+  object Mom {
+    case class MomStart(kidRef: ActorRef)
+
+    case class Food(food: String)
+
+    case class Ask(msg: String)
+
     val VEGETABLE = "veggies"
     val CHOCOLATE = "chocos"
   }
-  class Mom extends Actor{
+
+  class Mom extends Actor {
+
     import FussyKid._
     import Mom._
+
     override def receive: Receive = {
       case MomStart(kidRef) =>
         kidRef ! Food(VEGETABLE)
@@ -89,6 +109,7 @@ object ChangeActorBehaviour extends App {
   }
 
   import Mom._
+
   val system = ActorSystem("changeActorBehaviourSystem")
   val mom = system.actorOf(Props[Mom])
   val fussyKid = system.actorOf(Props[FussyKid])

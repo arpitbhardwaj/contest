@@ -4,8 +4,6 @@ import java.net.ConnectException
 
 import akka.actor.typed.scaladsl.Behaviors
 import akka.actor.typed.{ActorRef, Behavior, PostStop, PreRestart}
-import com.ab.persistance.ContestDao
-import com.ab.persistance.Model.Contest
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}

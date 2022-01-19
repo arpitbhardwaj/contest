@@ -20,7 +20,6 @@ import akka.http.scaladsl.server.Route
 import akka.util.Timeout
 import com.ab.actors.ContestManager
 import com.ab.actors.ContestManager.GetContestResponse
-import com.ab.persistance.Model._
 import spray.json.JsString
 
 import scala.concurrent.duration._

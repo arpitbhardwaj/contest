@@ -5,6 +5,15 @@ ThisBuild / scalaVersion := "2.13.7"
 lazy val akkaVersion = "2.6.18"
 lazy val slickVersion = "3.3.3"
 lazy val akkaHttpVersion = "10.2.6"
+lazy val leveldbVersion = "0.12"
+lazy val leveldbjniVersion = "1.8"
+lazy val postgresVersion = "42.2.2"
+lazy val cassandraVersion = "0.91"
+lazy val json4sVersion = "3.2.11"
+lazy val protobufVersion = "3.6.1"
+
+// some libs are available in Bintray's JCenter
+//resolvers += Resolver.jcenterRepo
 
 lazy val commonSettings = Seq(
   //scalaVersion := "2.13.0",
@@ -19,6 +28,26 @@ lazy val commonSettings = Seq(
 lazy val rootDependencies = Seq(
   "com.typesafe.akka"          %% "akka-actor"                % akkaVersion,
   "com.typesafe.akka"          %% "akka-testkit"              % akkaVersion,
+
+  "com.typesafe.akka"          %% "akka-persistence" % akkaVersion,
+  // local levelDB stores
+  "org.iq80.leveldb"            % "leveldb"          % leveldbVersion,
+  "org.fusesource.leveldbjni"   % "leveldbjni-all"   % leveldbjniVersion,
+
+  /*
+  // JDBC with PostgreSQL
+  "org.postgresql" % "postgresql" % postgresVersion,
+  "com.github.dnvriend" %% "akka-persistence-jdbc" % "3.4.0",
+
+  // Cassandra
+  "com.typesafe.akka" %% "akka-persistence-cassandra" % cassandraVersion,
+  "com.typesafe.akka" %% "akka-persistence-cassandra-launcher" % cassandraVersion % Test,
+  */
+
+  // Google Protocol Buffers
+  "com.google.protobuf" % "protobuf-java"  % protobufVersion,
+
+
   "org.scalatest"              %% "scalatest"                 % "3.2.9"               % Test
 )
 

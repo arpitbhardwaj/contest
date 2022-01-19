@@ -2,8 +2,6 @@ package com.ab.persistance
 
 import java.util.UUID
 
-import com.ab.persistance.Model.Contest
-
 import scala.concurrent.{ExecutionContext, Future}
 
 trait ContestDao {
