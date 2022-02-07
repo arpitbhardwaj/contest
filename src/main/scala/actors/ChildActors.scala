@@ -7,7 +7,6 @@ object ChildActors extends App {
 
   object Parent {
     case class CreateChild(name: String)
-
     case class TellChild(msg: String)
   }
 
