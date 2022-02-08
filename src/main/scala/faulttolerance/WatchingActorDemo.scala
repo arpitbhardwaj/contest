@@ -1,17 +1,20 @@
 package com.ab
-package actors
+package faulttolerance
 
-import akka.actor.{Actor, ActorLogging, ActorRef, ActorSystem, PoisonPill, Props, Terminated}
+import akka.actor.{Actor, ActorLogging, ActorSystem, PoisonPill, Props, Terminated}
 
 object WatchingActorDemo extends App {
 
   object Watcher {
     case class StartChild(name: String)
+
     case class StopChild(name: String)
+
     case object Stop
   }
 
-  class Watcher extends Actor with ActorLogging{
+  class Watcher extends Actor with ActorLogging {
+
     import Watcher._
 
     override def receive: Receive = {

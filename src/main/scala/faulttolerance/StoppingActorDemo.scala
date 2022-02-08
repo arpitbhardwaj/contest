@@ -1,5 +1,5 @@
 package com.ab
-package actors
+package faulttolerance
 
 import akka.actor.{Actor, ActorLogging, ActorRef, ActorSystem, Kill, PoisonPill, Props}
 
@@ -7,16 +7,19 @@ object StoppingActorDemo extends App {
 
   object Parent {
     case class StartChild(name: String)
+
     case class StopChild(name: String)
+
     case object Stop
   }
 
-  class Parent extends Actor with ActorLogging{
+  class Parent extends Actor with ActorLogging {
+
     import Parent._
 
     override def receive: Receive = withChild(Map())
 
-    def withChild(children: Map[String,ActorRef]): Receive = {
+    def withChild(children: Map[String, ActorRef]): Receive = {
       case StartChild(name) =>
         log.info(s"Starting child $name")
         context.become(withChild(children + (name -> context.actorOf(Props[Child], name))))
