@@ -27,12 +27,22 @@ lazy val commonSettings = Seq(
 )
 lazy val rootDependencies = Seq(
   "com.typesafe.akka"          %% "akka-actor"                % akkaVersion,
+
+  // for akka remoting
+  "com.typesafe.akka"          %% "akka-remote"               % akkaVersion,
+  //"io.aeron" % "aeron-driver" % "1.37.0",
+  //"io.aeron" % "aeron-client" % "1.37.0",
+  // for akka clustering
+  "com.typesafe.akka"          %% "akka-cluster"              % akkaVersion,
+  "com.typesafe.akka"          %% "akka-cluster-sharding"     % akkaVersion,
+  "com.typesafe.akka"          %% "akka-cluster-tools"        % akkaVersion,
+
   "com.typesafe.akka"          %% "akka-testkit"              % akkaVersion,
 
-  "com.typesafe.akka"          %% "akka-persistence" % akkaVersion,
+  "com.typesafe.akka"          %% "akka-persistence"          % akkaVersion,
   // local levelDB stores
-  "org.iq80.leveldb"            % "leveldb"          % leveldbVersion,
-  "org.fusesource.leveldbjni"   % "leveldbjni-all"   % leveldbjniVersion,
+  "org.iq80.leveldb"            % "leveldb"                   % leveldbVersion,
+  "org.fusesource.leveldbjni"   % "leveldbjni-all"            % leveldbjniVersion,
 
   /*
   // JDBC with PostgreSQL
