@@ -38,9 +38,7 @@ object RemoteActorsDemo extends App {
 
   //two different actor system running on same jvm exposing different ports
   val localSystem = ActorSystem("LocalSystem", ConfigFactory.load("remoting/remoteActors.conf"))
-
   val localSimpleActor = localSystem.actorOf(Props[SimpleActor],"localSimpleActor")
-
   localSimpleActor ! "hello, local actor"
 
   //[akka://LocalSystem@localhost:2551/user/localSimpleActor]
@@ -89,9 +87,8 @@ object RemoteActorsDemo extends App {
 object RemoteActorsDemo_Remote extends App {
 
   //two different actor system from different app running on same jvm exposing different ports
-  val remoteSystem = ActorSystem("RemoteSystem", ConfigFactory.load("remoting/remoteActors.conf").getConfig("remoteSystem"))
-
+  val remoteSystem = ActorSystem("RemoteSystem", ConfigFactory.load("remoting/remoteActors.conf")
+    .getConfig("remoteSystem"))
   val remoteSimpleActor = remoteSystem.actorOf(Props[SimpleActor],"remoteSimpleActor")
-
   remoteSimpleActor ! "hello, remote actor"
 }
