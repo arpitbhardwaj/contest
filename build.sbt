@@ -16,8 +16,6 @@ lazy val protobufVersion = "3.6.1"
 //resolvers += Resolver.jcenterRepo
 
 lazy val commonSettings = Seq(
-  //scalaVersion := "2.13.0",
-
   libraryDependencies ++= Seq(
     "org.scalactic"            %% "scalactic"                 % "3.2.9",
     "ch.qos.logback"            % "logback-classic"           % "1.2.10",
@@ -26,20 +24,29 @@ lazy val commonSettings = Seq(
   )
 )
 lazy val rootDependencies = Seq(
+  //for core akka
   "com.typesafe.akka"          %% "akka-actor"                % akkaVersion,
+  "com.typesafe.akka"          %% "akka-testkit"              % akkaVersion,
+
+  //for akka streams
+  "com.typesafe.akka"          %% "akka-stream"               % akkaVersion,
+  "com.typesafe.akka"          %% "akka-stream-testkit"       % akkaVersion           % Test,
 
   // for akka remoting
   "com.typesafe.akka"          %% "akka-remote"               % akkaVersion,
+
+  //for udp aeron
   //"io.aeron" % "aeron-driver" % "1.37.0",
   //"io.aeron" % "aeron-client" % "1.37.0",
+
   // for akka clustering
   "com.typesafe.akka"          %% "akka-cluster"              % akkaVersion,
   "com.typesafe.akka"          %% "akka-cluster-sharding"     % akkaVersion,
   "com.typesafe.akka"          %% "akka-cluster-tools"        % akkaVersion,
 
-  "com.typesafe.akka"          %% "akka-testkit"              % akkaVersion,
-
+  //for akka persistence
   "com.typesafe.akka"          %% "akka-persistence"          % akkaVersion,
+
   // local levelDB stores
   "org.iq80.leveldb"            % "leveldb"                   % leveldbVersion,
   "org.fusesource.leveldbjni"   % "leveldbjni-all"            % leveldbjniVersion,
@@ -56,7 +63,6 @@ lazy val rootDependencies = Seq(
 
   // Google Protocol Buffers
   "com.google.protobuf" % "protobuf-java"  % protobufVersion,
-
 
   "org.scalatest"              %% "scalatest"                 % "3.2.9"               % Test
 )

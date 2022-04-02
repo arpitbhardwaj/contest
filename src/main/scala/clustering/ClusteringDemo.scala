@@ -34,7 +34,7 @@ import com.typesafe.config.ConfigFactory
  *    send a join command to the seed node that responds first
  *  node is in the joining state
  *    wait for gossip to converge
- *    all nodes in teh cluster must acknowledge the new node
+ *    all nodes in the cluster must acknowledge the new node
  *  the leader will set the state of new node to up
  *
  * Leave a cluster
@@ -60,8 +60,8 @@ object ClusteringDemo extends App {
           |""".stripMargin
       ).withFallback(ConfigFactory.load("clustering/clusteringBasics.conf"))
 
-      val system = ActorSystem("AbixelCluster",config)
-      system.actorOf(Props[ClusterSubscriber], "clusterSubscriber")
+      val system = ActorSystem("AbixelCluster",config)//all the actor system in a cluster must have same name
+      //system.actorOf(Props[ClusterSubscriber], "clusterSubscriber")
     }
   }
 
