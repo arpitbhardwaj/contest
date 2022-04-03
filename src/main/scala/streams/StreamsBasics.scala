@@ -35,8 +35,8 @@ import scala.concurrent.Future
  * Sources can emit any kind of objects as long as they are immutable and serializable
  * nulls are not allowed
  */
-object StreamsPrimer extends App {
-  implicit val system = ActorSystem("StreamsPrimer")
+object StreamsBasics extends App {
+  implicit val system = ActorSystem("StreamsBasics")
   implicit val materializer = ActorMaterializer
 
   //source
