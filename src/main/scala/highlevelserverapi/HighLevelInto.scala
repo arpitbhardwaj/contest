@@ -16,7 +16,7 @@ import akka.stream.ActorMaterializer
  *  routing settings
  *  etc
  */
-object HighLevelAPI extends App {
+object HighLevelInto extends App {
   implicit val system = ActorSystem("HighLevelIntro")
   implicit val materializer = ActorMaterializer()
   import system.dispatcher
