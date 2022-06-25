@@ -103,6 +103,6 @@ lazy val root = (project in file("."))
   .settings(
     name := "contest",
     idePackagePrefix := Some("com.ab"),
-    libraryDependencies ++= rootDependencies
+    libraryDependencies ++= rootDependencies ++ akkaDependencies
 
   )
