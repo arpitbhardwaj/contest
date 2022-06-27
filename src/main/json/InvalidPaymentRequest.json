@@ -1,0 +1,9 @@
+{
+  "creditCard": {
+    "serialNum": "1234-1234-1234-1234",
+    "secCode": "123",
+    "acc": "ts76-78-757-jh76"
+  },
+  "receiverAccount": "872-khj-76-gh56",
+  "amount": 99
+}
