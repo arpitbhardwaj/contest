@@ -5,15 +5,19 @@ import akka.actor.ActorSystem
 import akka.event.LoggingAdapter
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.{HttpRequest, StatusCodes}
+import akka.http.scaladsl.model.{HttpEntity, HttpMethod, HttpMethods, HttpRequest, StatusCodes}
 import akka.stream.ActorMaterializer
+import akka.stream.scaladsl.Sink
+import akka.util.ByteString
+
+import scala.concurrent.Future
 
 /**
  *
  * Symbols are automatically interned into the jvm
  *  offer performance benefits as they always compare by reference equality instead of content equality
  */
-class ExtractionDirectives extends App {
+object ExtractionDirectives extends App {
 
   implicit val system = ActorSystem("ExtractionDirectives")
   implicit val materializer = ActorMaterializer()
@@ -72,7 +76,6 @@ class ExtractionDirectives extends App {
 
   val extractRequestRoute: Route =
     path("controlEndpoint"){
-
       extractRequest{
         (httpRequest: HttpRequest) =>
           extractLog{
@@ -83,5 +86,34 @@ class ExtractionDirectives extends App {
       }
     }
 
-  Http().bindAndHandle(pathExtractionRoute, "localhost", 8080)
+  val extractRequestMethodRoute: Route =
+    path("extractMethod") {
+      extractMethod {
+        (httpMethod: HttpMethod) => {
+          if (httpMethod.equals(HttpMethods.POST)){
+            println(s"i have got ${httpMethod.value} request")
+          }
+          complete(StatusCodes.OK)
+        }
+      }
+    }
+
+  val extractRequestEntityRoute: Route =
+    path("extractEntity") {
+      extractRequestEntity {
+        (entity: HttpEntity) =>
+          val source = entity.getDataBytes
+          val sink: Sink[ByteString, Future[ByteString]] =
+            Sink.fold[ByteString, ByteString](ByteString.empty)((x, y) => x ++ y)
+          source.runWith(sink, materializer) map { byteString =>
+            if (byteString.nonEmpty)
+              println(s"i have got body ${byteString.map(_.toChar).mkString}")
+            else
+              println("Empty byteString")
+          }
+          complete(StatusCodes.OK)
+      }
+    }
+
+  Http().bindAndHandle(extractRequestEntityRoute, "localhost", 8080)
 }

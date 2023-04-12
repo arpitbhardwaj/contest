@@ -22,7 +22,7 @@ import akka.stream.ActorMaterializer
  *  fail it
  *
  */
-class FilteringDirectives extends App {
+object FilteringDirectives extends App {
   implicit val system = ActorSystem("FilteringDirectives")
   implicit val materializer = ActorMaterializer()
   import system.dispatcher

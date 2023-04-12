@@ -5,7 +5,7 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.model.StatusCodes
 import akka.stream.ActorMaterializer
 
-class ActionableDirectives extends App {
+object ActionableDirectives extends App {
   implicit val system = ActorSystem("CompositeDirectives")
   implicit val materializer = ActorMaterializer()
   import system.dispatcher
