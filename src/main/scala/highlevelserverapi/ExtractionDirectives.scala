@@ -125,13 +125,16 @@ object ExtractionDirectives extends App {
 
   val formFieldsRoute: Route =
     path("formFields") {
-      formFields("value".?) { value =>
-        if (value.isDefined) {
-          println(s"i have go a forms field ${value.get}")
+      (parameter("value".?) & formFields("value".?)) { (paramValue, formDataValue) =>
+        if (paramValue.isDefined) {
+          println(s"i have got a parameter ${paramValue.get}")
+        }
+        if (formDataValue.isDefined) {
+          println(s"i have got a form field ${formDataValue.get}")
         }
         complete(StatusCodes.OK)
       }
     }
 
-  Http().bindAndHandle(formFieldRoute, "localhost", 8080)
+  Http().bindAndHandle(formFieldsRoute, "localhost", 8080)
 }
