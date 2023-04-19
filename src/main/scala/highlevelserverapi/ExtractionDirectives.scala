@@ -58,7 +58,6 @@ object ExtractionDirectives extends App {
     path("api" / "item"){
       parameter("id".as[Int]){
         (itemId:Int) =>
-          //other directives
           println(s"i have got a number in my path $itemId")
           complete(StatusCodes.OK)
       }
@@ -68,7 +67,6 @@ object ExtractionDirectives extends App {
     path("api" / "item"){
       parameter('id.as[Int]){ //synmbols
         (itemId:Int) =>
-          //other directives
           println(s"i have go a number in my path $itemId")
           complete(StatusCodes.OK)
       }
@@ -115,5 +113,25 @@ object ExtractionDirectives extends App {
       }
     }
 
-  Http().bindAndHandle(extractRequestEntityRoute, "localhost", 8080)
+  val formFieldRoute: Route =
+    path("formField") {
+      formField("value".?) { value =>
+        if (value.isDefined) {
+          println(s"i have go a form field ${value.get}")
+        }
+        complete(StatusCodes.OK)
+      }
+    }
+
+  val formFieldsRoute: Route =
+    path("formFields") {
+      formFields("value".?) { value =>
+        if (value.isDefined) {
+          println(s"i have go a forms field ${value.get}")
+        }
+        complete(StatusCodes.OK)
+      }
+    }
+
+  Http().bindAndHandle(formFieldRoute, "localhost", 8080)
 }
