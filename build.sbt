@@ -64,7 +64,8 @@ lazy val rootDependencies = Seq(
   // Google Protocol Buffers
   "com.google.protobuf" % "protobuf-java"  % protobufVersion,
 
-  "org.scalatest"              %% "scalatest"                 % "3.2.9"               % Test
+  "org.scalatest"              %% "scalatest"                 % "3.2.9"               % Test,
+  "org.zeromq"                 % "jeromq"                     % "0.5.3",
 )
 
 lazy val databaseDependencies = Seq(
