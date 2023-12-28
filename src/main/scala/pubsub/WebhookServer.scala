@@ -3,24 +3,37 @@ package pubsub
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity, StatusCodes}
+import akka.http.scaladsl.model.{HttpEntity, StatusCodes}
 import akka.http.scaladsl.server.Route
-import akka.stream.ActorMaterializer
+import akka.stream.scaladsl.Sink
+import akka.util.ByteString
+
+import scala.concurrent.Future
 
 object WebhookServer extends App {
 
   implicit val system = ActorSystem("WebhookServerAS")
-  implicit val materializer = ActorMaterializer()
+  import system.dispatcher
 
   import akka.http.scaladsl.server.Directives._
 
-  val chainedRoutes:Route = {
+  private val simplePostRoute:Route = {
     path("webhook"){
-      post{
+      extractRequestEntity {
+        (entity: HttpEntity) =>
+          val source = entity.getDataBytes
+          val sink: Sink[ByteString, Future[ByteString]] =
+            Sink.fold[ByteString, ByteString](ByteString.empty)((x, y) => x ++ y)
+          source.runWith(sink, system) map { byteString =>
+            if (byteString.nonEmpty)
+              println(s"Received ${byteString.map(_.toChar).mkString}")
+            else
+              println("Empty body")
+          }
           complete(StatusCodes.OK)
-        }
+      }
     }
   }
 
-  Http().bindAndHandle(chainedRoutes, "localhost", 8080)
+  Http().newServerAt("localhost", 8080).bind(simplePostRoute)
 }
