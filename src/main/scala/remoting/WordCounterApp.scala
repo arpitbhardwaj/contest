@@ -11,35 +11,26 @@ object WordCounterDomain {
   case object EndWordCount
 }
 
-class WordCountWorker extends Actor with ActorLogging{
-  import WordCounterDomain._
-
-  override def receive: Receive = {
-    case WordCountTask(text) =>
-      log.info(s"i'm processing : $text")
-      sender() ! WordCountResult(text.split(" ").length)
-  }
-}
-
+/*
+  Identify the workers in the remote JVM
+     - create actor selection for every worker from 1 to nWorkers
+     - send identify messages to the actor selection
+     - get into an initialization state, while you are receiving actor identities
+ */
 class WordCountMaster extends Actor with ActorLogging{
   import WordCounterDomain._
 
   override def receive: Receive = {
-
-      /*
-        Identify the workers in the remote JVM
-        - create actor selection for every worker from 1 to nWorkers
-        - send identify messages to the actor selection
-        - get into an initialization state, while you are receiving actor identities
-       */
     case Initialize(nWorkers) =>
+      log.info("Master initializing...")
       val workerSelections = (1 to nWorkers).map(id => context.actorSelection(s"akka://WorkerSystem@localhost:2552/user/wordCountWorker$id"))
       workerSelections.foreach(_ ! Identify("42"))
       context.become(initializing(List(), nWorkers))
     }
 
-    def initializing(workers: List[ActorRef], remainingWorkers:Int):Receive ={
+    private def initializing(workers: List[ActorRef], remainingWorkers:Int):Receive ={
       case ActorIdentity("42", Some(workerRef)) =>
+        log.info(s"Worker Identified: $workerRef")
         if (remainingWorkers == 1)
           context.become(online(workerRef :: workers, 0,0))
         else
@@ -48,15 +39,15 @@ class WordCountMaster extends Actor with ActorLogging{
 
     def online(workers: List[ActorRef], remainingTasks: Int, totalCount: Int): Receive = {
       case text: String =>
-        //split into sentences
-        val sentences = text.split("\\. ")
+        val sentences = text.split("\\. ")  //split into sentences
         //send sentences to workers in turn
         Iterator.continually(workers).flatten.zip(sentences.iterator).foreach{
           pair =>
-            val(worker, sentence) = pair
+            val (worker, sentence) = pair
             worker ! WordCountTask(sentence)
         }
         context.become(online(workers, remainingTasks + sentences.length, totalCount))
+
       case WordCountResult(count) =>
         if (remainingTasks == 1){
           log.info(s"Total Count: ${totalCount + count}")
@@ -66,6 +57,16 @@ class WordCountMaster extends Actor with ActorLogging{
           context.become(online(workers, remainingTasks - 1 , totalCount + count))
         }
     }
+}
+
+class WordCountWorker extends Actor with ActorLogging{
+  import WordCounterDomain._
+
+  override def receive: Receive = {
+    case WordCountTask(text) =>
+      log.info(s"i'm processing : $text")
+      sender() ! WordCountResult(text.split(" ").length)
+  }
 }
 
 object MasterApp extends App{
@@ -92,7 +93,7 @@ object WorkerApp extends App{
   import WordCounterDomain._
   val config = ConfigFactory.parseString(
     """
-      |akka.remote.artery.canonical.port = 2551
+      |akka.remote.artery.canonical.port = 2552
       |""".stripMargin
   ).withFallback(ConfigFactory.load("remoting/wordCounterApp.conf"))
 

@@ -22,7 +22,7 @@ import scala.util.{Failure, Success}
  */
 object RemoteActorsDemo extends App {
   //two different actor system running on same jvm exposing different ports
-  val localSystem = ActorSystem("LocalSystem", ConfigFactory.load("remoting/remoteActors.conf"))
+  val localSystem = ActorSystem("LocalSystem", ConfigFactory.load("remoting/remoteActorsDemo.conf"))
   val localSimpleActor = localSystem.actorOf(Props[SimpleActor],"localSimpleActor")
   localSimpleActor ! "hello, local actor"
 
@@ -62,7 +62,7 @@ object RemoteActorsDemo extends App {
 
 object RemoteActorsDemo_Remote extends App {
   //two different actor system from different app running on same jvm exposing different ports
-  val remoteSystem = ActorSystem("RemoteSystem", ConfigFactory.load("remoting/remoteActors.conf")
+  val remoteSystem = ActorSystem("RemoteSystem", ConfigFactory.load("remoting/remoteActorsDemo.conf")
     .getConfig("remoteSystem"))
   val remoteSimpleActor = remoteSystem.actorOf(Props[SimpleActor],"remoteSimpleActor")
   remoteSimpleActor ! "hello, remote actor"
