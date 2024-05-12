@@ -10,32 +10,17 @@ import scala.language.postfixOps
 import scala.util.{Failure, Success}
 
 /**
+ * @author Arpit Bhardwaj
  *
- * Actor Model Principles
- *  every interaction based on sending messages
- *  full actor encapsulation
- *  no locking
- *  message sending latency
- *  at most once message delivery
- *  message ordering maintained per sender/receive pair
+ * Method 1: Actor Selection
+ * Method 2: Resolve the actor selection to an actor ref
+ * Method 3: Actor identification via messages
+ *          - actor resolved will ask for an actor selection from local actor system
+ *          - actor resolver will send a Identify(42) to the actor selection
+ *          - the remote actor will automatically respond with ActorIdentify(42, actorRef)
  *
- * The Principles holds
- *  on the same JVM in parallel application
- *  locally on multiple JVMs
- *  in a distributed env on any scale
- *
- *
- * Location Transparency -  the real actor can be anywhere
- * Akka remoting is based on location transparency
- * We communicate with actors via the reference
- *
- * Transparent Remoting - we are using the object as it were local but bts it communicates remotely
- * JAVA RMI uses transparent remoting
- *
- * #artery is akka remoting implementation
  */
 object RemoteActorsDemo extends App {
-
   //two different actor system running on same jvm exposing different ports
   val localSystem = ActorSystem("LocalSystem", ConfigFactory.load("remoting/remoteActors.conf"))
   val localSimpleActor = localSystem.actorOf(Props[SimpleActor],"localSimpleActor")
@@ -43,18 +28,15 @@ object RemoteActorsDemo extends App {
 
   //[akka://LocalSystem@localhost:2551/user/localSimpleActor]
   //[akka://RemoteSystem@localhost:2552/user/remoteSimpleActor]
-
   //[akka://RemoteSystem@localhost:2552/user/remoteSimpleActor]
   //[{remote artery protocol}{actor system}{remote address}{actor path}]
   //[akka://LocalSystem/user/localSimpleActor]
 
-  //sending message to remote actor
-
-  //Method 1: Actor Selection
+  //Method 1
   val remoteActorSelection = localSystem.actorSelection("akka://RemoteSystem@localhost:2552/user/remoteSimpleActor")
   remoteActorSelection ! "hello form the \"local\" jvm"
 
-  //Method 2: Resolve the actor selection to an actor ref
+  //Method 2
   import localSystem.dispatcher
   implicit val timeout = Timeout(3 seconds)
   val remoteActorRefFuture = remoteActorSelection.resolveOne()
@@ -63,13 +45,7 @@ object RemoteActorsDemo extends App {
     case Failure(exception) => println(s"I've failed to resolve the actor because: $exception")
   }
 
-  //Method 3: Actor identification via messages
-  /*
-  -actor resolved will ask for an actor selection from local actor system
-  actor resolver will send a Identify(42) to the actor selection
-  the remote actor will automatically with ActorIdentify(42, actorRef)
-   */
-
+  //Method 3
   class ActorResolver extends Actor with ActorLogging{
     override def preStart(): Unit = {
       val remoteActorSelection = localSystem.actorSelection("akka://RemoteSystem@localhost:2552/user/remoteSimpleActor")
@@ -85,7 +61,6 @@ object RemoteActorsDemo extends App {
 }
 
 object RemoteActorsDemo_Remote extends App {
-
   //two different actor system from different app running on same jvm exposing different ports
   val remoteSystem = ActorSystem("RemoteSystem", ConfigFactory.load("remoting/remoteActors.conf")
     .getConfig("remoteSystem"))

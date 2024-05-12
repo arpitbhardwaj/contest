@@ -1,3 +1,5 @@
+import sbt.Runtime
+
 ThisBuild / version := "0.1.0-SNAPSHOT"
 
 ThisBuild / scalaVersion := "2.13.7"
@@ -18,7 +20,7 @@ lazy val protobufVersion = "3.6.1"
 lazy val commonSettings = Seq(
   libraryDependencies ++= Seq(
     "org.scalactic"            %% "scalactic"                 % "3.2.9",
-    "ch.qos.logback"            % "logback-classic"           % "1.2.10",
+    "ch.qos.logback"            % "logback-classic"           % "1.5.6"               % Runtime,
     "org.scalatest"            %% "scalatest"                 % "3.2.9"               % Test,
     "com.softwaremill.macwire" %% "macros"                    % "2.5.2"               % Provided
   )
@@ -103,6 +105,7 @@ lazy val contestService = (project in file("contestService"))
 lazy val root = (project in file("."))
   .settings(
     name := "contest",
+    commonSettings,
     idePackagePrefix := Some("com.ab"),
     libraryDependencies ++= rootDependencies ++ akkaDependencies
 

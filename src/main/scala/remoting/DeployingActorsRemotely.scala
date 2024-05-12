@@ -10,17 +10,18 @@ import com.typesafe.config.ConfigFactory
 /**
  *
  * Steps:
- *  The name of the actor is checked in config for remote deployment
- *    if its not there it will created locally
- *  the props passed to actorOf will be sent to remote actor system
- *  the remote actor system will create it there
- *  an ActorRef is returned
+ *  1.The name of the actor is checked in config for remote deployment
+ *      if its not there it will created locally
+ *  2.the props passed to actorOf will be sent to remote actor system
+ *  3.the remote actor system will create it there
+ *  4.an ActorRef is returned
  *
  *  Caveat: The props objects need to be serializable
- *    in 99% cases it is
- *    watch for lambdas that need to be sent over the wire
- *    the actor class needs to be in the remote JVM's classpath
+ *    - in 99% cases it is
+ *    - watch for lambdas that need to be sent over the wire
+ *    - the actor class needs to be in the remote JVM's classpath
  */
+
 object DeployingActorsRemotely_LocalApp extends App {
   val system = ActorSystem("LocalActorSystem", ConfigFactory.load("remoting/deployingActorsRemotely.conf")
     .getConfig("localApp"))
