@@ -8,7 +8,6 @@ object WordCounterDomain {
   case class Initialize(nWorkers: Int)
   case class WordCountTask(text: String)
   case class WordCountResult(count: Int)
-  case object EndWordCount
 }
 
 /*
