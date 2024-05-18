@@ -1,9 +1,9 @@
 package com.ab
 package clustering
 
-import akka.actor.{Actor, ActorIdentity, ActorLogging, ActorRef, ActorSystem, Address, Identify, PoisonPill, Props, ReceiveTimeout}
+import akka.actor.{Actor, ActorLogging, ActorRef, ActorSystem, Address, Props, ReceiveTimeout}
 import akka.cluster.Cluster
-import akka.cluster.ClusterEvent.{InitialStateAsEvents, MemberEvent, MemberJoined, MemberRemoved, MemberUp, UnreachableMember}
+import akka.cluster.ClusterEvent.{InitialStateAsEvents, MemberEvent, MemberRemoved, MemberUp, UnreachableMember}
 import akka.pattern.pipe
 import akka.util.Timeout
 import com.typesafe.config.ConfigFactory

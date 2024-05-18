@@ -10,22 +10,6 @@ import com.typesafe.config.ConfigFactory
  * @author Arpit Bhardwaj
  *
  */
-object ClusteringDemo extends App {
-  private def startCluster(ports: List[Int]):Unit = {
-    ports.foreach{ port =>
-      val config = ConfigFactory.parseString(
-        s"""
-          |akka.remote.artery.canonical.port = $port
-          |""".stripMargin
-      ).withFallback(ConfigFactory.load("clustering/clusteringDemo.conf"))
-
-      val system = ActorSystem("AbixelCluster",config)  //all the actor system in a cluster must have same name
-      //system.actorOf(Props[ClusterSubscriber], "clusterSubscriber")
-    }
-  }
-
-  startCluster(List(2551,2552,0)) //for 0 system will allocate the port for you
-}
 
 class ClusterSubscriber extends Actor with ActorLogging {
   val cluster = Cluster(context.system)
@@ -57,6 +41,23 @@ class ClusterSubscriber extends Actor with ActorLogging {
     case m: MemberEvent =>
       log.info(s"Another member event: $m")
   }
+}
+
+object ClusteringDemo extends App {
+  private def startCluster(ports: List[Int]):Unit = {
+    ports.foreach{ port =>
+      val config = ConfigFactory.parseString(
+        s"""
+           |akka.remote.artery.canonical.port = $port
+           |""".stripMargin
+      ).withFallback(ConfigFactory.load("clustering/clusteringDemo.conf"))
+
+      val system = ActorSystem("AbixelCluster",config)  //all the actor system in a cluster must have same name
+      //system.actorOf(Props[ClusterSubscriber], "clusterSubscriber")
+    }
+  }
+
+  startCluster(List(2551,2552,0)) //for 0 system will allocate the port for you
 }
 
 object ManualRegistration extends App{
