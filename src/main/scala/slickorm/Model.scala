@@ -7,8 +7,10 @@ import java.time.LocalDate
 case class Movie(id: Long,
                  name: String,
                  releaseDate: LocalDate,
-                 lengthInMin: Int
-                )
+                 lengthInMin: Int)
+
+case class Actor(id: Long,
+                 name: String)
 
 object SlickTables {
   import slick.jdbc.PostgresProfile.api._
@@ -22,5 +24,14 @@ object SlickTables {
   }
 
   lazy val movieTable = TableQuery[MovieTable]
+
+  class ActorTable(tag: Tag) extends Table[Actor](tag, Some("movies"), "Actor") {
+    def id = column[Long]("actor_id", O.PrimaryKey, O.AutoInc)
+    def name = column[String]("name")
+
+    def * = (id, name)<> (Actor.tupled, Actor.unapply)
+  }
+
+  lazy val actorTable = TableQuery[ActorTable]
 
 }
