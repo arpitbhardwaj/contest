@@ -72,7 +72,7 @@ lazy val rootDependencies = Seq(
 )
 
 lazy val databaseDependencies = Seq(
-  "com.typesafe.slick"         %% "slick"                     % slickVersion,
+  "com.typesafe.slick"         %% "slickorm" % slickVersion,
   "com.typesafe.slick"         %% "slick-hikaricp"            % slickVersion,
   "org.postgresql"              % "postgresql"                % "42.3.1",
 )
@@ -87,6 +87,14 @@ lazy val akkaDependencies = Seq(
   "com.typesafe.akka"          %% "akka-stream-testkit"       % akkaVersion           % Test,
   "com.typesafe.akka"          %% "akka-http-testkit"         % akkaHttpVersion       % Test,
   "com.typesafe.akka"          %% "akka-actor-testkit-typed"  % "2.6.18"               % Test,
+)
+
+lazy val slickPostgresDependencies = Seq(
+  "com.typesafe.slick" %% "slickorm" % "3.6.1",
+  "org.postgresql" % "postgresql" % "42.7.8",
+  "com.typesafe.slick" %% "slick-hikaricp" % "3.6.1",
+  "com.github.tminglei" %% "slick-pg" % "0.23.1",
+  "com.github.tminglei" %% "slick-pg_play-json" % "0.23.1"
 )
 
 lazy val userService = (project in file("userService"))
@@ -108,6 +116,6 @@ lazy val root = (project in file("."))
     name := "contest",
     commonSettings,
     idePackagePrefix := Some("com.ab"),
-    libraryDependencies ++= rootDependencies ++ akkaDependencies
+    libraryDependencies ++= rootDependencies ++ akkaDependencies ++ slickPostgresDependencies
 
   )
