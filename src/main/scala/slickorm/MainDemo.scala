@@ -21,8 +21,9 @@ object MainDemo {
   import PrivateExecutionContext._
 
   val shawshank = Movie(1L, "Shawshank Redemption", LocalDate.of(1994, 4, 2), 162)
+  val shallow = Movie(1L, "Shallow", LocalDate.of(2001, 4, 2), 132)
 
-  def insertMovie(movie: Movie): Unit = {
+  private def insertMovie(movie: Movie): Unit = {
     val insertQuery = SlickTables.movieTable += movie
     val futureId = Connection.db.run(insertQuery)
     futureId.onComplete {
@@ -31,8 +32,28 @@ object MainDemo {
     }
   }
 
+  private def readAllMovie(): Unit = {
+    val readAllQuery = SlickTables.movieTable.result
+    val result = Connection.db.run(readAllQuery)
+    result.onComplete {
+      case Failure(ex) => println(s"Query failed: $ex")
+      case Success(movies) => println(s"Query successful: Movie List: ${movies.mkString(",")}")
+    }
+  }
+
+  private def readSpecificMovie(): Unit = {
+    val readSpecificQuery = SlickTables.movieTable.result
+    val result = Connection.db.run(readSpecificQuery)
+    result.onComplete {
+      case Failure(ex) => println(s"Query failed: $ex")
+      case Success(movies) => println(s"Query successful: Movie List: ${movies.mkString(",")}")
+    }
+  }
+
   def main(args: Array[String]): Unit = {
-    insertMovie(shawshank)
+    //insertMovie(shawshank)
+    //insertMovie(shallow)
+    readAllMovie()
     Thread.sleep(2000)
   }
 }
