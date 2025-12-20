@@ -29,6 +29,13 @@ object MainDemo {
   val juliaRoberts = Actor(2L, "Julia Roberts")
   val akshayKhanna = Actor(2L, "Akshay Khanna")
 
+  val providers = List(
+    StreamingProviderMapping(0L, 1L, StreamingService.Netflix),
+    StreamingProviderMapping(1L, 1L, StreamingService.AmazonPrime),
+    StreamingProviderMapping(2L, 2L, StreamingService.DisneyPlus),
+    StreamingProviderMapping(3L, 2L, StreamingService.Hulu)
+  )
+
   private def insertMovie(movie: Movie): Unit = {
     val insertQuery = SlickTables.movieTable += movie
     val futureId = Connection.db.run(insertQuery)
@@ -101,6 +108,26 @@ object MainDemo {
     }
   }
 
+  private def addStreamingProviders(): Unit = {
+    val insertQuery = SlickTables.streamingProviderMappingTable ++= providers
+    val future = Connection.db.run(insertQuery)
+    future.onComplete {
+      case Failure(ex) => println(s"Query failed: $ex")
+      case Success(_) => println(s"Query successful: Streaming Providers Inserted")
+    }
+  }
+
+  private def findProvidersByMovieId(movieId: Long): Unit = {
+    val query = SlickTables.streamingProviderMappingTable
+      .filter(_.movieId === movieId)
+
+    val result = Connection.db.run(query.result)
+    result.onComplete {
+      case Failure(ex) => println(s"Query failed: $ex")
+      case Success(providers) => println(s"Query successful: Streaming Providers for Movie ID $movieId: ${providers.mkString(",")}")
+    }
+  }
+
 
   def main(args: Array[String]): Unit = {
     //insertMovie(shawshank)
@@ -110,7 +137,9 @@ object MainDemo {
     //insertMultipleActor(Seq(tomHanks, juliaRoberts))
     //readAllMoviesUsingPlainQuery()
     //runMultipleQueriesInSingleTransaction()
-    findAllActorsByMovieId(3L)
+    //findAllActorsByMovieId(3L)
+    //addStreamingProviders()
+    //findProvidersByMovieId(1L)
     Thread.sleep(2000)
   }
 }

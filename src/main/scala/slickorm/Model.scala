@@ -16,8 +16,22 @@ case class MovieActorMapping(id:Long,
                              movieId: Long,
                              actorId: Long)
 
+case class StreamingProviderMapping(id: Long,
+                                    movieId: Long,
+                                    streamingProvider: StreamingService.Provider)
+
+object StreamingService extends Enumeration{
+  type Provider = Value
+  val Netflix = Value("Netflix")
+  val AmazonPrime = Value("AmazonPrime")
+  val DisneyPlus = Value("DisneyPlus")
+  val Hulu = Value("Hulu")
+}
+
 object SlickTables {
   import slick.jdbc.PostgresProfile.api._
+  import slick.jdbc.PostgresProfile.MappedColumnType
+
   class MovieTable(tag: Tag) extends Table[Movie](tag, Some("movies"), "Movie") {
     def id = column[Long]("movie_id", O.PrimaryKey, O.AutoInc)
     def name = column[String]("name")
@@ -49,4 +63,29 @@ object SlickTables {
 
   lazy val movieActorMappingTable = TableQuery[MovieActorMappingTable]
 
+  class StreamingProviderMappingTable(tag: Tag) extends Table[StreamingProviderMapping](tag, Some("movies"), "StreamingProviderMapping") {
+
+    implicit val providerMapper = MappedColumnType.base[StreamingService.Provider, String](
+        provider => provider.toString,
+        string => StreamingService.withName(string)
+      )
+
+    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
+    def movieId = column[Long]("movie_id")
+    def streamingProvider = column[StreamingService.Provider]("streaming_provider")
+
+    def * = (id, movieId, streamingProvider)<> (StreamingProviderMapping.tupled, StreamingProviderMapping.unapply)
+  }
+
+  lazy val streamingProviderMappingTable = TableQuery[StreamingProviderMappingTable]
+
+  val tables = List(movieTable, actorTable, movieActorMappingTable, streamingProviderMappingTable)
+  val ddl = tables.map(_.schema).reduce(_ ++ _)
+
+}
+
+object TableDefinitionGenerator {
+  def main(args: Array[String]): Unit = {
+    println(SlickTables.ddl.createStatements.mkString(";\n"))
+  }
 }
