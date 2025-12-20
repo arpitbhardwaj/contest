@@ -12,6 +12,10 @@ case class Movie(id: Long,
 case class Actor(id: Long,
                  name: String)
 
+case class MovieActorMapping(id:Long,
+                             movieId: Long,
+                             actorId: Long)
+
 object SlickTables {
   import slick.jdbc.PostgresProfile.api._
   class MovieTable(tag: Tag) extends Table[Movie](tag, Some("movies"), "Movie") {
@@ -33,5 +37,16 @@ object SlickTables {
   }
 
   lazy val actorTable = TableQuery[ActorTable]
+
+
+  class MovieActorMappingTable(tag: Tag) extends Table[MovieActorMapping](tag, Some("movies"), "MovieActorMapping") {
+    def id = column[Long]("movie_actor_id", O.PrimaryKey, O.AutoInc)
+    def movieId = column[Long]("movie_id")
+    def actorId = column[Long]("actor_id")
+
+    def * = (id, movieId, actorId)<> (MovieActorMapping.tupled, MovieActorMapping.unapply)
+  }
+
+  lazy val movieActorMappingTable = TableQuery[MovieActorMappingTable]
 
 }

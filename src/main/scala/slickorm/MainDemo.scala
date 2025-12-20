@@ -5,7 +5,7 @@ import slick.jdbc.GetResult
 
 import java.time.LocalDate
 import java.util.concurrent.Executors
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
 
 /**
@@ -87,6 +87,20 @@ object MainDemo {
     }
   }
 
+  private def findAllActorsByMovieId(movieId: Long): Unit = {
+    val joinQuery = SlickTables.movieActorMappingTable
+      .filter(_.movieId === movieId)
+      .join(SlickTables.actorTable)
+      .on(_.actorId === _.id)
+      .map(_._2)
+
+    val result = Connection.db.run(joinQuery.result)
+    result.onComplete {
+      case Failure(ex) => println(s"Query failed: $ex")
+      case Success(actors) => println(s"Query successful: Actors for Movie ID $movieId: ${actors.mkString(",")}")
+    }
+  }
+
 
   def main(args: Array[String]): Unit = {
     //insertMovie(shawshank)
@@ -95,7 +109,8 @@ object MainDemo {
     //readSpecificMovie()
     //insertMultipleActor(Seq(tomHanks, juliaRoberts))
     //readAllMoviesUsingPlainQuery()
-    runMultipleQueriesInSingleTransaction()
+    //runMultipleQueriesInSingleTransaction()
+    findAllActorsByMovieId(3L)
     Thread.sleep(2000)
   }
 }
