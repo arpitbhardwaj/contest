@@ -5,7 +5,7 @@ ThisBuild / version := "0.1.0-SNAPSHOT"
 ThisBuild / scalaVersion := "2.13.7"
 
 lazy val akkaVersion = "2.6.18"
-lazy val slickVersion = "3.3.3"
+lazy val slickVersion = "3.6.1"
 lazy val akkaHttpVersion = "10.2.6"
 lazy val leveldbVersion = "0.12"
 lazy val leveldbjniVersion = "1.8"
@@ -90,7 +90,7 @@ lazy val akkaDependencies = Seq(
 )
 
 lazy val slickPostgresDependencies = Seq(
-  "com.typesafe.slick" %% "slickorm" % "3.6.1",
+  "com.typesafe.slick" %% "slick" % "3.6.1",
   "org.postgresql" % "postgresql" % "42.7.8",
   "com.typesafe.slick" %% "slick-hikaricp" % "3.6.1",
   "com.github.tminglei" %% "slick-pg" % "0.23.1",

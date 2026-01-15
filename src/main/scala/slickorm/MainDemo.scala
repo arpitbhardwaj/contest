@@ -36,6 +36,8 @@ object MainDemo {
     StreamingProviderMapping(3L, 2L, StreamingService.Hulu)
   )
 
+  val shallowMovieLocations = MovieLocations(0L, 1L, List("USA", "Canada", "UK"))
+
   private def insertMovie(movie: Movie): Unit = {
     val insertQuery = SlickTables.movieTable += movie
     val futureId = Connection.db.run(insertQuery)
@@ -128,6 +130,15 @@ object MainDemo {
     }
   }
 
+  private def addShallowMovieLocations(): Unit = {
+    val insertQuery = SpecialTables.movieLocationsTable += shallowMovieLocations
+    val future = Connection.db.run(insertQuery)
+    future.onComplete {
+      case Failure(ex) => println(s"Query failed: $ex")
+      case Success(_) => println(s"Query successful: Movie Locations Inserted")
+    }
+  }
+
 
   def main(args: Array[String]): Unit = {
     //insertMovie(shawshank)
@@ -140,6 +151,8 @@ object MainDemo {
     //findAllActorsByMovieId(3L)
     //addStreamingProviders()
     //findProvidersByMovieId(1L)
+    addShallowMovieLocations()
+
     Thread.sleep(2000)
   }
 }
